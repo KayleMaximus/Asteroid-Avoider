@@ -8,11 +8,12 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _forceMagnitude;
     [SerializeField] private float _maxVelocity;
-
+    [SerializeField] private float _roatationSpeed;
     private Camera _mainCamera;
     private Rigidbody _rb;
 
     private Vector3 _movementDirection;
+    
 
     void Start()
     {
@@ -24,6 +25,16 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessInput();
         KeepPlayerOnScreen();
+        RotateToFaceVelocity();
+    }
+    
+    private void FixedUpdate()
+    {
+        if (_movementDirection == Vector3.zero) { return; }
+
+        _rb.AddForce(_movementDirection * _forceMagnitude * Time.deltaTime, ForceMode.Force);
+
+        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxVelocity);
     }
 
     private void KeepPlayerOnScreen()
@@ -50,31 +61,29 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position = newPosition;
     }
-
-    private void FixedUpdate()
-    {
-        if (_movementDirection == Vector3.zero) { return; }
-
-        _rb.AddForce(_movementDirection * _forceMagnitude * Time.deltaTime, ForceMode.Force);
-
-        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxVelocity);
-    }
-
     private void ProcessInput()
     {
         if (Touchscreen.current.primaryTouch.press.isPressed)
         {
+            //Get Input
             Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
-
             Vector3 worldPosition = _mainCamera.ScreenToWorldPoint(touchPosition);
-
+            //Translate the plane
             _movementDirection = transform.position - worldPosition;
             _movementDirection.z = 0f;
-            _movementDirection.Normalize();
+            _movementDirection.Normalize(); //Care about DIRECTION not MAGNITUDE
         }
         else
         {
             _movementDirection = Vector3.zero;
         }
+    }
+
+    private void RotateToFaceVelocity()
+    {
+        if(_rb.velocity == Vector3.zero) return;
+
+        Quaternion targetLocation = Quaternion.LookRotation(_rb.velocity,Vector3.back);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetLocation, _roatationSpeed * Time.deltaTime);   
     }
 }
