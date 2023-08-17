@@ -206,7 +206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8484633}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 428074893}
+        m_TargetAssemblyTypeName: GameOverHandler, Assembly-CSharp
+        m_MethodName: ContinueButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8484633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +302,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27bbea83e65c0146be1c1d6e9919eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 1613336964}
+  _continueButton: {fileID: 8484632}
+  _gameOvertext: {fileID: 1087664007}
+  _scoreSystem: {fileID: 1167248655}
   _gameOverDisplay: {fileID: 2100726733}
   _asteroidSpawner: {fileID: 2106793862}
 --- !u!1 &480503533
@@ -903,6 +919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1167248654}
+  - component: {fileID: 1167248655}
   m_Layer: 0
   m_Name: ScoreSystem
   m_TagString: Untagged
@@ -926,6 +943,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1167248655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167248653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fcf8b74855cc354c958afcbe19a19d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 1690262349}
+  _scoreMultipliers: 5
 --- !u!1 &1381279697
 GameObject:
   m_ObjectHideFlags: 0
